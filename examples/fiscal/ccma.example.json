@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-09-10T12:00:00-03:00",
+  "period": "2026-09",
+  "debt_capital_ars": null,
+  "debt_interest_ars": null,
+  "credit_balance_ars": null,
+  "last_payment_applied_on": null,
+  "last_payment_period": null,
+  "automatic_debit": "unknown",
+  "debt_items": [],
+  "source": "arca_ccma",
+  "notes": "Completar desde una consulta autenticada de CCMA. null significa no verificado, no cero. Si hay deuda, debt_items debe identificar período, concepto, capital_ars e interest_ars y sumar el total antes de habilitar un borrador de VEP."
+}

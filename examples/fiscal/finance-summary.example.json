@@ -1,0 +1,35 @@
+{
+  "schema_version": 2,
+  "generated_at": "2026-09-10T12:00:00-03:00",
+  "period": {"from": "2025-09-01", "to": "2026-09-10"},
+  "currency": "ARS",
+  "observed": {
+    "business_income": 1200000,
+    "personal_income": 0,
+    "business_expenses": 180000,
+    "personal_expenses": 250000,
+    "internal_transfers": 400000,
+    "excluded": 0,
+    "unreviewed": 0
+  },
+  "counts": {
+    "business_income": 12,
+    "personal_income": 0,
+    "business_expenses": 6,
+    "personal_expenses": 9,
+    "internal_transfers": 4,
+    "excluded": 0,
+    "unreviewed": 0
+  },
+  "unsupported_currencies": {},
+  "reconciliation_candidates": [
+    {
+      "candidate_id": "0123456789abcdef",
+      "occurred_on": "2026-09-05",
+      "amount_ars": 90000,
+      "bucket": "business_income"
+    }
+  ],
+  "source": "finance_export",
+  "classification_rule": "Ejemplo sintético: clasificación revisada antes de exportar"
+}

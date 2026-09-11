@@ -1,0 +1,44 @@
+{
+  "name": "monotributo-copilot-ar",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Copiloto fiscal seguro para facturación, categoría, CCMA, recategorización y DFE de monotributistas argentinos",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MatiasJRB/monotributo-copilot-ar.git"
+  },
+  "scripts": {
+    "dev": "tsx src/server.ts",
+    "start": "node dist/server.js",
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "test": "node --import tsx --test src/billing.test.ts src/mappings.test.ts src/safety.test.ts src/fiscal.test.ts src/dfe.test.ts",
+    "arca:status": "tsx src/cli.ts status",
+    "arca:sales-points": "tsx src/cli.ts sales-points",
+    "arca:last": "tsx src/cli.ts last",
+    "arca:dry-run": "tsx src/cli.ts emit --dry-run",
+    "arca:emit-homo": "tsx src/cli.ts emit --homo --allow-homo-emit",
+    "arca:render-pdf": "tsx src/cli.ts render-pdf",
+    "fiscal": "tsx src/fiscalCli.ts",
+    "dfe": "tsx src/dfeCli.ts",
+    "setup:csr:homo": "bash scripts/generate-csr.sh homo",
+    "setup:csr:prod": "bash scripts/generate-csr.sh prod",
+    "doctor": "tsx src/cli.ts doctor",
+    "postinstall": "node scripts/patch-arcasdk.js"
+  },
+  "dependencies": {
+    "@arcasdk/core": "^0.3.5",
+    "@arcasdk/pdf": "^0.2.0",
+    "dotenv": "^16.4.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

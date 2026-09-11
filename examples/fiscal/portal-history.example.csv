@@ -1,0 +1,3 @@
+pto_vta,tipo,numero,fecha,moneda,cotizacion,importe_total
+1,Factura C,1,2026-08-05,ARS,1,100000
+1,Nota de Crédito C,2,2026-08-20,ARS,1,10000

@@ -1,0 +1,11 @@
+{
+  "activity": "services",
+  "activityStartedOn": null,
+  "surfaceParameterApplies": null,
+  "affectedSurfaceM2": null,
+  "annualElectricEnergyKwh": null,
+  "annualRentArs": null,
+  "maximumUnitPriceArs": null,
+  "excludedActivityDetected": null,
+  "notes": "Completar con datos respaldados antes de revisar el expediente. Usar 0 solo cuando el parámetro fue verificado y no aplica/tuvo consumo cero; null significa desconocido."
+}

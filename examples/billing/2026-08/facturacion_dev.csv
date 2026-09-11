@@ -1,0 +1,2 @@
+periodo,cliente_id,razon_social,cuit,condicion_iva,domicilio_fiscal,email_facturacion,comprobante_tipo,concepto,descripcion,monto,moneda,vencimiento,notas
+2026-08,cliente-demo,Cliente de prueba,20-99999999-9,Monotributo,Domicilio de prueba,facturacion@example.com,Factura C,Servicios,Servicios profesionales,100000,ARS,2026-09-10,
