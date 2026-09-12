@@ -2,9 +2,15 @@
 
 ## Idea central
 
-Monotributo Copilot AR es **agent-operated**. La persona no debería memorizar una
-secuencia de comandos ni navegar un dashboard para cada control: expresa una
-intención y un agente la traduce a herramientas deterministas del repositorio.
+Monotributo Copilot AR es una **base agent-operated**, no una aplicación final.
+La persona no debería memorizar una secuencia de comandos ni navegar un dashboard
+para cada control: expresa una intención —o un scheduler detecta que corresponde
+actuar— y un agente la traduce a herramientas deterministas del repositorio.
+
+El repositorio deliberadamente separa el runtime del agente del motor fiscal. Un
+runtime como Codex u OpenClaw puede aportar conversación, cron, colas y canales;
+esta base aporta las operaciones, los contratos de evidencia y los límites que
+deben seguir funcionando aunque cambie el modelo o la interfaz.
 
 La separación es deliberada:
 

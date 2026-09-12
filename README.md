@@ -1,14 +1,45 @@
 # Monotributo Copilot AR
 
-Herramientas TypeScript para que una persona monotributista pueda automatizar
-trabajo operativo sin convertir una automatización en su contador.
+**Base fiscal determinista para construir agentes que operen el monotributo
+argentino.**
 
-La interfaz principal está pensada para ser **un agente**: la persona explica en
-lenguaje natural qué necesita y el agente traduce esa intención a comandos,
-fuentes explícitas y artefactos revisables. La CLI no intenta ser la experiencia
-final; es el protocolo estable y auditable que usan los agentes.
+La idea central no es ofrecer otra CLI o un dashboard que la persona tenga que
+aprender. **El agente es la interfaz**: recibe una intención en lenguaje natural,
+decide qué controles corresponden y usa este repositorio como su capa de
+herramientas, contratos y guardrails auditables.
 
-El proyecto combina dos capas:
+Por sí solo, el repositorio no pretende comportarse como un contador autónomo.
+Aporta el motor fiscal, la skill, los comandos y los artefactos que un runtime de
+agentes —Codex, OpenClaw u otro compatible— puede programar, encadenar y exponer
+por chat, WhatsApp, cron o una bandeja de aprobaciones.
+
+```text
+persona / scheduler / evento
+            |
+            v
+      agente + skill          <- interfaz y criterio operativo
+            |
+            v
+      CLI + JSON/Markdown     <- protocolo determinista de este repo
+            |
+            v
+   ARCA + fuentes explícitas  <- evidencia y fuente de verdad
+```
+
+## Qué aporta esta base
+
+- herramientas fiscales deterministas que un agente puede invocar;
+- una skill portable que enseña intención, secuencia y límites;
+- contratos JSON/Markdown para conservar evidencia fuera del chat;
+- defaults read-only y gates explícitos para efectos sensibles;
+- verificación posterior contra ARCA y protección ante reintentos ambiguos.
+
+El runtime que se monte encima aporta la conversación, el calendario, la cola,
+la persistencia del trabajo y el canal de notificaciones. Esta separación permite
+cambiar de agente sin reescribir las reglas fiscales ni esconderlas dentro de un
+prompt.
+
+El motor combina dos capas:
 
 1. **Facturación directa:** WSAA + WSFEv1, Factura C de servicios en pesos, PDF y
    una API local de consulta.
