@@ -3,12 +3,22 @@
 Herramientas TypeScript para que una persona monotributista pueda automatizar
 trabajo operativo sin convertir una automatización en su contador.
 
+La interfaz principal está pensada para ser **un agente**: la persona explica en
+lenguaje natural qué necesita y el agente traduce esa intención a comandos,
+fuentes explícitas y artefactos revisables. La CLI no intenta ser la experiencia
+final; es el protocolo estable y auditable que usan los agentes.
+
 El proyecto combina dos capas:
 
 1. **Facturación directa:** WSAA + WSFEv1, Factura C de servicios en pesos, PDF y
    una API local de consulta.
 2. **Control fiscal read-only:** historial, notas de crédito/débito, límites de
    categoría, recategorización, CCMA, vencimientos, conciliación y alertas DFE.
+
+El repositorio incluye una skill reutilizable en
+[`skills/monotributo-copilot-ar`](skills/monotributo-copilot-ar/SKILL.md) para que
+Codex u otro agente compatible sepa cómo operar ambas capas sin saltearse los
+guardrails.
 
 > **No es asesoramiento contable ni jurídico.** No reemplaza la intervención
 > profesional cuando una situación requiere interpretación, firma, presentación,
@@ -66,6 +76,16 @@ npm run check
 El archivo `.env` empieza en homologación. No completes datos reales hasta leer
 [Seguridad](SECURITY.md) y [Operación](docs/operations.md).
 
+### Operarlo con un agente
+
+Instalá o vinculá la carpeta `skills/monotributo-copilot-ar` en el directorio de
+skills de tu agente y pedile, por ejemplo:
+
+> Revisá mi situación mensual de monotributo. Empezá por fuentes read-only,
+> marcá todo dato faltante y prepará cualquier acción sensible para mi aprobación.
+
+El contrato completo está en [Interfaz de agentes](docs/agent-interface.md).
+
 ### Probar el motor fiscal con ejemplos
 
 ```bash
@@ -113,13 +133,15 @@ la operación completa antes de usarla.
 ## Arquitectura
 
 ```text
+Persona --> agente + skill --> CLI / JSON
+                              |
 ARCA WSFE ---------> historial normalizado -----+
-Export del portal -> importador CSV ------------+--> motor fiscal puro
+Export del portal -> importador CSV ------------+--> motor fiscal puro --> reporte al agente
 Resumen financiero anonimizado -----------------+
 Snapshot CCMA -----------------------------------+
-Metadata DFE --> registro mínimo por excepción
+Metadata DFE --> registro mínimo por excepción --+
 
-CSV de facturación --> dry-run --> WSFE --> respuesta aceptada --> PDF
+Agente --> CSV de facturación --> dry-run --> aprobación humana --> WSFE --> verificación --> PDF
 ```
 
 El código no automatiza el portal de ARCA, no almacena Clave Fiscal y no incorpora
@@ -129,6 +151,7 @@ un navegador desatendido.
 
 - [Especificación](docs/spec.md)
 - [Arquitectura](docs/architecture.md)
+- [Interfaz de agentes](docs/agent-interface.md)
 - [Operación](docs/operations.md)
 - [Roadmap](docs/roadmap.md)
 - [Seguridad](SECURITY.md)

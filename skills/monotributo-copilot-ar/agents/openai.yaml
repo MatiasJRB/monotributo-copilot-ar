@@ -1,0 +1,4 @@
+interface:
+  display_name: "Monotributo Copilot AR"
+  short_description: "Operá facturación y controles fiscales con guardrails"
+  default_prompt: "Revisá mi situación mensual de monotributo, ejecutá primero controles read-only y prepará cualquier acción sensible para mi confirmación."

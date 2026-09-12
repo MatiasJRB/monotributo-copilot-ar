@@ -30,6 +30,18 @@ comandos diferentes.
 Los datos reales viven bajo `data/`; certificados y tickets viven bajo
 `secrets/` y `tickets/`. Las tres rutas están ignoradas por Git.
 
+## Agentes como interfaz
+
+La superficie de producto esperada no es un panel administrativo completo. Un
+agente recibe la intención en lenguaje natural, carga la skill incluida, ejecuta
+la CLI, lee sus respuestas JSON y presenta un resumen con evidencia y acciones
+posibles. La CLI es una frontera determinista entre el razonamiento del agente y
+las operaciones fiscales.
+
+El agente puede encadenar consultas read-only sin ocultar faltantes. Una emisión
+o cualquier comunicación externa permanece detrás de una aprobación humana y una
+verificación posterior. Ver [Interfaz de agentes](agent-interface.md).
+
 ## Decisiones
 
 - Artefactos JSON/Markdown antes que una base de datos.
@@ -37,4 +49,5 @@ Los datos reales viven bajo `data/`; certificados y tickets viven bajo
 - Cálculo puro para reglas fiscales y tests.
 - Contratos financieros anonimizados.
 - Escrituras fiscales con gates humanos explícitos.
+- Agente como interfaz; CLI y JSON como protocolo auditable.
 - Casos extraordinarios fuera del flujo automático.
