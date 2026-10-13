@@ -1,90 +1,82 @@
+<picture>
+  <source media="(max-width: 640px)" srcset="assets/cover-mobile.svg">
+  <img src="assets/cover.svg" alt="Monotributo Copilot AR. Tu agente al frente, vos tenés el control. Vos o tu agenda → agente → herramientas → ARCA. Las acciones sensibles requieren tu aprobación." width="1200">
+</picture>
+
 # Monotributo Copilot AR
 
-**Base fiscal determinista para construir agentes que operen el monotributo
-argentino.**
+**Herramientas abiertas para que un agente de IA prepare facturas y revise tu monotributo, con evidencia y aprobación humana.**
 
-La idea central no es ofrecer otra CLI o un dashboard que la persona tenga que
-aprender. **El agente es la interfaz**: recibe una intención en lenguaje natural,
-decide qué controles corresponden y usa este repositorio como su capa de
-herramientas, contratos y guardrails auditables.
+[Entender la idea](#la-idea-en-un-minuto) · [Ver un ejemplo](#así-se-usaría) · [Probarlo](#inicio-rápido-seguro) · [Contribuir](CONTRIBUTING.md)
 
-Por sí solo, el repositorio no pretende comportarse como un contador autónomo.
-Aporta el motor fiscal, la skill, los comandos y los artefactos que un runtime de
-agentes —Codex, OpenClaw u otro compatible— puede programar, encadenar y exponer
-por chat, WhatsApp, cron o una bandeja de aprobaciones.
+## La idea en un minuto
 
-```text
-persona / scheduler / evento
-            |
-            v
-      agente + skill          <- interfaz y criterio operativo
-            |
-            v
-      CLI + JSON/Markdown     <- protocolo determinista de este repo
-            |
-            v
-   ARCA + fuentes explícitas  <- evidencia y fuente de verdad
-```
+En lugar de aprender comandos o abrir otra app para cada control, hablás con un
+agente. El agente usa las herramientas de este repositorio para preparar facturas,
+revisar la información disponible y explicar qué falta. **Antes de una acción
+sensible, se detiene para pedirte aprobación.**
 
-## Qué aporta esta base
+Pensalo como una caja de herramientas: **el agente es la interfaz; este repo es
+la base que ejecuta y deja registro**. La conversación, el calendario y las
+notificaciones los aporta el entorno donde corre ese agente —por ejemplo, Codex
+u OpenClaw—, no el repositorio por sí solo.
 
-- herramientas fiscales deterministas que un agente puede invocar;
-- una skill portable que enseña intención, secuencia y límites;
-- contratos JSON/Markdown para conservar evidencia fuera del chat;
-- defaults read-only y gates explícitos para efectos sensibles;
-- verificación posterior contra ARCA y protección ante reintentos ambiguos.
+## Así se usaría
 
-El runtime que se monte encima aporta la conversación, el calendario, la cola,
-la persistencia del trabajo y el canal de notificaciones. Esta separación permite
-cambiar de agente sin reescribir las reglas fiscales ni esconderlas dentro de un
-prompt.
+Ejemplo ilustrativo del flujo, no una conversación real ni una promesa de integración lista para usar:
 
-El motor combina dos capas:
+> **Vos:** «Prepará las facturas de este mes y revisá si hay algo para atender».
+>
+> **Agente:** Usa la skill incluida, revisa las fuentes y prepara una simulación:
+> destinatarios, importes, períodos y datos faltantes. No emite nada todavía.
+>
+> **Vos:** Revisás la propuesta y aprobás una emisión específica.
+>
+> **Agente:** Ejecuta esa acción, verifica la respuesta de ARCA y guarda el
+> comprobante autorizado. Si el resultado es incierto, no reintenta a ciegas.
 
-1. **Facturación directa:** WSAA + WSFEv1, Factura C de servicios en pesos, PDF y
-   una API local de consulta.
-2. **Control fiscal read-only:** historial, notas de crédito/débito, límites de
-   categoría, recategorización, CCMA, vencimientos, conciliación y alertas DFE.
+También puede preparar un reporte de control **sin emitir ni pagar nada**.
+Si falta una fuente, lo dice: «no verificado» nunca se convierte en «deuda cero».
 
-El repositorio incluye una skill reutilizable en
-[`skills/monotributo-copilot-ar`](skills/monotributo-copilot-ar/SKILL.md) para que
-Codex u otro agente compatible sepa cómo operar ambas capas sin saltearse los
-guardrails.
+## Qué incluye hoy
 
-> **No es asesoramiento contable ni jurídico.** No reemplaza la intervención
-> profesional cuando una situación requiere interpretación, firma, presentación,
-> defensa o una decisión fiscal extraordinaria.
+| Necesidad | Qué aporta el repositorio |
+|---|---|
+| **Preparar facturas** | Simulación sin emisión, Factura C de servicios en pesos y PDF después de la autorización. |
+| **Revisar ingresos y categoría** | Historial de comprobantes, ventana de doce meses y comparación con topes versionados. |
+| **Controlar pagos y deuda** | Reporte a partir de una captura de la cuenta corriente (CCMA), con fecha y cobertura explícitas. |
+| **Preparar una recategorización** | Expediente para revisión; no presenta el trámite por vos. |
+| **Registrar avisos fiscales** | Registro mínimo de alertas del Domicilio Fiscal Electrónico (DFE); no abre ni responde comunicaciones. |
+| **Operar con agentes** | [Skill incluida](skills/monotributo-copilot-ar/SKILL.md), comandos y archivos JSON/Markdown que otros agentes pueden usar. |
 
-## Por qué existe
+Hay funciones que consultan ARCA por sus servicios web y otras que necesitan
+archivos importados. **No todas las fuentes se obtienen automáticamente.**
 
-Emitir una factura es sólo una parte del trabajo. El riesgo cotidiano está en
-olvidar deuda, interpretar como cero una fuente ausente, exceder una categoría,
-recategorizar con una ventana incompleta o ejecutar una acción irreversible sin
-revisión humana.
+## Hasta dónde llega
 
-Monotributo Copilot AR modela esos riesgos explícitamente:
+- **Es una base para construir, no un contador autónomo instalado.** Hace falta
+  configurar las fuentes y el entorno del agente. No es una app comercial.
+- **No genera ni paga VEP, no reasigna saldos y no presenta recategorizaciones.**
+  Puede preparar información para revisar, pero esos trámites quedan fuera de la automatización.
+- **No navega ARCA desatendidamente ni almacena tu Clave Fiscal.** Los certificados
+  y datos reales se mantienen en archivos locales ignorados por Git.
+- **No reemplaza la responsabilidad profesional.** Intimaciones, defensas,
+  certificaciones y decisiones fiscales extraordinarias requieren intervención profesional.
 
-- una fuente faltante produce estado `incomplete`;
-- un snapshot CCMA viejo no prueba deuda cero;
-- un match entre depósito y factura es una pista, no una prueba de cobro;
-- un VEP queda bloqueado si el detalle no reconcilia con el total;
-- la recategorización no se habilita antes del cierre de su ventana;
-- producción requiere una confirmación exacta y separada.
+> No es asesoramiento contable ni jurídico. El proyecto no está afiliado,
+> respaldado ni mantenido por ARCA.
 
-## Estado
+## Para quién es
 
-- Factura C de servicios en ARS mediante WSFEv1.
-- Dry-run, homologación y producción separadas.
-- Consulta del último comprobante antes de reintentos.
-- PDF sólo después de una autorización aceptada.
-- Historial de Facturas C, Notas de Débito C y Notas de Crédito C.
-- Importación del historial descargado desde el portal.
-- Ventana móvil de doce meses y tabla de categorías versionada.
-- Expediente semestral de recategorización.
-- Snapshot CCMA y borrador de VEP con gate de conciliación.
-- Contrato financiero anonimizado y conciliación heurística.
-- Registro DFE con metadata mínima y prohibición de cuerpos/adjuntos.
-- 34 pruebas automatizadas sin llamadas productivas.
+**Si querés entender el proyecto:** el ejemplo de arriba es el punto de partida.
+No necesitás conocer TypeScript para entender qué se delega y qué sigue bajo tu control.
+
+**Si querés probarlo o adaptarlo:** es un proyecto para desarrolladores y personas
+que operan agentes con acceso a comandos y archivos. Podés empezar con datos de
+muestra, sin credenciales reales. La [guía de agentes](docs/agent-interface.md)
+explica cómo conectar intención, herramientas y aprobaciones.
+
+---
 
 ## Requisitos
 
